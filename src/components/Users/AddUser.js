@@ -8,6 +8,7 @@ import ErrorModal from "../UI/ErrorModal";
 const AddUser = (props) => {
   const nameInputRef = useRef();
   const ageInputRef = useRef();
+  const collegeNameInputRef = useRef();
 
   const [error, setError] = useState();
 
@@ -15,7 +16,8 @@ const AddUser = (props) => {
     event.preventDefault();
     const enteredUsername = nameInputRef.current.value;
     const enteredAge = ageInputRef.current.value;
-    if (enteredUsername.trim().length === 0 || enteredAge.trim().length === 0) {
+    const enteredCollegeName = collegeNameInputRef.current.value;
+    if (enteredUsername.trim().length === 0 || enteredAge.trim().length === 0 || enteredCollegeName.trim().length === 0) {
         setError({
             title: 'Invalid Input',
             message: 'Please Enter a valid name and age'
@@ -29,9 +31,10 @@ const AddUser = (props) => {
         })
       return;
     }
-    props.onAddUser(enteredUsername, enteredAge);
+    props.onAddUser(enteredUsername, enteredAge, enteredCollegeName);
     nameInputRef.current.value = '';
     ageInputRef.current.value = '';
+    collegeNameInputRef.current.value = '';
   };
 
   const errorHandler = () => {
@@ -54,6 +57,12 @@ const AddUser = (props) => {
             id="age"
             type="number"
             ref={ageInputRef}
+          />
+          <label htmlFor="collegeName">College Name</label>
+          <input
+            id="collegeName"
+            type="text"
+            ref={collegeNameInputRef}
           />
           <Button type="submit">Add User</Button>
         </form>
